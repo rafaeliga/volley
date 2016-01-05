@@ -30,7 +30,7 @@ public final class StringPart extends BasePart {
             throw new IllegalArgumentException("Value may not be null");    //$NON-NLS-1$
         }
         
-        final String partName = UrlEncodingHelper.encode(name, HTTP.DEFAULT_PROTOCOL_CHARSET);
+        final String partName = name;
         
         if (charset == null) {
             charset = HTTP.DEFAULT_CONTENT_CHARSET;

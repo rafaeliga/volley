@@ -148,7 +148,7 @@ public class HttpTools {
             if (httpResult != null) {
                 httpResult.onStart();
                 httpResult.onError(new Exception("url can not be empty!"));
-                httpResult.onFinish();
+                httpResult.onHttpCallbackFinish();
             }
             return;
         }
@@ -164,7 +164,7 @@ public class HttpTools {
             public void onResponse(String response) {
                 if (httpResult != null) {
                     httpResult.onResult(response);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
         }, new ErrorListener() {
@@ -173,7 +173,7 @@ public class HttpTools {
             public void onErrorResponse(VolleyError error) {
                 if (httpResult != null) {
                     httpResult.onError(error);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
         }, new Response.LoadingListener() {
@@ -251,7 +251,7 @@ public class HttpTools {
             public void onResponse(String response) {
                 if (httpResult != null) {
                     httpResult.onResult(response);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
         }, new Response.ErrorListener(){
@@ -260,7 +260,7 @@ public class HttpTools {
             public void onErrorResponse(VolleyError error) {
                 if (httpResult != null) {
                     httpResult.onError(error);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
             
@@ -309,7 +309,7 @@ public class HttpTools {
         if (TextUtils.isEmpty(url)) {
             if (httpResult != null) {
                 httpResult.onError(new Exception("url can not be empty!"));
-                httpResult.onFinish();
+                httpResult.onHttpCallbackFinish();
             }
             return request;
         }
@@ -343,7 +343,7 @@ public class HttpTools {
         if (requestInfo == null || TextUtils.isEmpty(requestInfo.url)) {
             if (httpResult != null) {
                 httpResult.onError(new Exception("url can not be empty!"));
-                httpResult.onFinish();
+                httpResult.onHttpCallbackFinish();
             }
             return;
         }
@@ -366,7 +366,7 @@ public class HttpTools {
             public void onResponse(String response) {
                 if (httpResult != null) {
                     httpResult.onResult(response);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
         }, new Response.ErrorListener() {
@@ -375,7 +375,7 @@ public class HttpTools {
             public void onErrorResponse(VolleyError error) { 
                 if (httpResult != null) {
                     httpResult.onError(error);
-                    httpResult.onFinish();
+                    httpResult.onHttpCallbackFinish();
                 }
             }
         }, new Response.LoadingListener() {

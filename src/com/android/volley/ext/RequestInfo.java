@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.android.volley.VolleyLog;
-
 public class RequestInfo {
 	
 	public final String boundary = String.valueOf(System.currentTimeMillis());

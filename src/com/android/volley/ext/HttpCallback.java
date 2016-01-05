@@ -2,7 +2,7 @@ package com.android.volley.ext;
 
 public interface HttpCallback {
 	public void onStart();
-	public void onFinish();
+	public void onHttpCallbackFinish();
 	public void onResult(String string);
 	public void onError(Exception e); 
 	public void onCancelled();
