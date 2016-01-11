@@ -11,7 +11,8 @@ public class RequestInfo {
 	
 	public final String boundary = String.valueOf(System.currentTimeMillis());
 	
-	public String url ;
+	public String url;
+	public String token;
 	public Map<String,String> params = new HashMap<String, String>() ;
 	public Map<String, String> headers = new HashMap<String, String>();
 	public Map<String, File> fileParams = new HashMap<String, File>();
@@ -19,8 +20,9 @@ public class RequestInfo {
     public RequestInfo() {
     }
 
-    public RequestInfo(String url, Map<String, String> params) {
+    public RequestInfo(String url, String token, Map<String, String> params) {
         this.url = url;
+        this.token = token; 
         this.params = params;
     }
     

@@ -61,7 +61,7 @@ public class HttpTools {
      * @param httpResult
      */
     public void get(String url, Map<String, String> paramsMap, final HttpCallback httpResult) {
-        get(new RequestInfo(url, paramsMap), httpResult);
+        get(new RequestInfo(url, "", paramsMap), httpResult);
     }
     
     /**
@@ -82,7 +82,7 @@ public class HttpTools {
      * @param httpResult
      */
     public void post(final String url, final Map<String, String> paramsMap, final HttpCallback httpResult) {
-        post(new RequestInfo(url, paramsMap), httpResult);
+        post(new RequestInfo(url, "", paramsMap), httpResult);
     }
     
     /**
@@ -121,16 +121,18 @@ public class HttpTools {
      * upload 请求
      * 
      * @param url
+     * @param token TODO
      * @param paramsMap
      * @param fileParams
      * @param httpResult
      * @since 3.4
      */
-    public void upload(final String url, final Map<String, Object> params, final HttpCallback httpResult) {
+    public void upload(final String url, String token, final Map<String, Object> params, Listener sucessListener, ErrorListener errorListener) {
     	RequestInfo requestInfo = new RequestInfo();
     	requestInfo.url = url;
     	requestInfo.putAllParams(params);
-    	upload(requestInfo, httpResult);
+    	requestInfo.token = token;
+    	upload(requestInfo, sucessListener, errorListener);
     }
     
     /**
@@ -138,7 +140,9 @@ public class HttpTools {
      * @param requestInfo
      * @param httpResult
      */
-    public void upload(final RequestInfo requestInfo, final HttpCallback httpResult) {
+    public void upload(final RequestInfo requestInfo, Listener sucessListener, ErrorListener errorListener) {
+    	final HttpCallback httpResult = null;
+    	
     	if (sRequestQueue == null) {
             sRequestQueue = Volley.newNoCacheRequestQueue(mContext);
         }
@@ -158,25 +162,8 @@ public class HttpTools {
         if (httpResult != null) {
             httpResult.onStart();
         }
-        MultiPartRequest<String> request = new MultiPartRequest<String>(Method.POST, url, new Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                if (httpResult != null) {
-                    httpResult.onResult(response);
-                    httpResult.onHttpCallbackFinish();
-                }
-            }
-        }, new ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (httpResult != null) {
-                    httpResult.onError(error);
-                    httpResult.onHttpCallbackFinish();
-                }
-            }
-        }, new Response.LoadingListener() {
+        
+        MultiPartRequest<String> request = new MultiPartRequest<String>(Method.POST, url, sucessListener, errorListener, new Response.LoadingListener() {
 
             @Override
             public void onLoading(long count, long current) {
@@ -211,6 +198,7 @@ public class HttpTools {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Charset", "UTF-8");
+                headers.put("Authorization", requestInfo.token);
                 headers.putAll(requestInfo.getHeaders());
                 return headers;
             }
